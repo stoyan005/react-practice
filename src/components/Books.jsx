@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 
 import './books.css';
 import List from './List';
+import BookCard from './BookCard';
 
-function Books({ searchTerm, onFavourite }) {
+function Books({ searchTerm, onFavourite, onAddToCart, favouriteBooks }) {
 	const [books, setBooks] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
@@ -24,28 +25,31 @@ function Books({ searchTerm, onFavourite }) {
 			});
 	}, []);
 
-	if (loading) return <p>Loading books....</p>;
-	if (error) return <p>Error: {error}</p>;
+	if (loading) return <div className="section">Loading books....</div>;
+	if (error) return <div className="section">Error: {error}</div>;
 
 	const filteredBooks = books.filter((book) =>
 		book.title.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
 	return (
-		<div>
-			<h2>Books List</h2>
-			<List
-				items={filteredBooks}
-				renderItem={(book) => (
-					<>
-						<strong>{book.title}</strong> - {book.author} -
-						{book.publication_year}
-						<button onClick={() => onFavourite(book)}>
-							Add to Favourite
-						</button>
-					</>
-				)}
-			/>
+		<div className="section">
+			<div className="section-header">
+				<h2>Books List ({filteredBooks.length})</h2>
+			</div>
+			<div className="books-grid">
+				{filteredBooks.map((book) => (
+					<BookCard
+						key={book.title}
+						book={book}
+						onFavourite={onFavourite}
+						onAddToCart={onAddToCart}
+						isFavourited={favouriteBooks.some(
+							(fave) => fave.title === book.title
+						)}
+					/>
+				))}
+			</div>
 		</div>
 	);
 }

@@ -2,11 +2,11 @@ function List({ items, renderItem, emptyMessage = 'No Items Found' }) {
 	if (!items.length) return <p>{emptyMessage}</p>;
 
 	return (
-		<ul>
+		<div>
 			{items.map((item, index) => (
-				<li key={index}>{renderItem(item)}</li>
+				<div key={index}>{renderItem(item)}</div>
 			))}
-		</ul>
+		</div>
 	);
 }
 

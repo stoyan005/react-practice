@@ -4,27 +4,30 @@ import './App.css';
 import Books from './components/Books';
 import SearchBox from './components/SearchBox';
 import FavouriteBooks from './components/FavouriteBooks';
-import Cart from './components/Cart';
 
 function App() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [favouriteBooks, setFavouriteBooks] = useState([]);
 	const [cartItems, setCartItems] = useState([]);
 
+	// ! ADD TO FAVOURITES LIST //
 	const addFavourite = (book) => {
 		if (!favouriteBooks.some((b) => b.title === book.title)) {
 			setFavouriteBooks([...favouriteBooks, book]);
 		}
 	};
 
+	// ! REMOVE FROM FAVOURITES LIST //
 	const removeFavourite = (book) => {
 		setFavouriteBooks(favouriteBooks.filter((b) => b.title !== book.title));
 	};
 
+	// ! CLEAR FAVOURITES LIST //
 	const clearFavourites = () => {
 		setFavouriteBooks([]);
 	};
 
+	// ! ADD TO CART //
 	const addToCart = (book) => {
 		setCartItems((currentItems) => {
 			const existingItem = currentItems.find(
@@ -42,6 +45,7 @@ function App() {
 		});
 	};
 
+	// ! REMOVE FROM CART //
 	const removeFromCart = (bookTitle, removeAll = false) => {
 		setCartItems((currentItems) => {
 			const existingItem = currentItems.find(
@@ -61,15 +65,22 @@ function App() {
 		});
 	};
 
+	// ! CLEAR CART //
 	const clearCart = () => {
 		setCartItems([]);
 	};
 
+	// ! TOTAL PRICE //
 	const getTotalPrice = () => {
 		return cartItems.reduce(
 			((total, item) => total + item.book.price * item.quantity,
 			0).toFixed(2)
 		);
+	};
+
+	// ! TOTAL ITEMs //
+	const getTotalItemsCount = () => {
+		return cartItems.reduce((total, item) => total + item.quantity, 0);
 	};
 
 	return (
