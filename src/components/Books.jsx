@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import './books.css';
-import List from './List';
 import BookCard from './BookCard';
 
 function Books({ searchTerm, onFavourite, onAddToCart, favouriteBooks }) {

@@ -4,6 +4,7 @@ import './App.css';
 import Books from './components/Books';
 import SearchBox from './components/SearchBox';
 import FavouriteBooks from './components/FavouriteBooks';
+import Cart from './components/Cart';
 
 function App() {
 	const [searchTerm, setSearchTerm] = useState('');
@@ -72,26 +73,50 @@ function App() {
 
 	// ! TOTAL PRICE //
 	const getTotalPrice = () => {
-		return cartItems.reduce(
-			((total, item) => total + item.book.price * item.quantity,
-			0).toFixed(2)
-		);
+		return cartItems
+			.reduce((total, item) => total + item.book.price * item.quantity, 0)
+			.toFixed(2);
 	};
 
-	// ! TOTAL ITEMs //
+	// ! TOTAL ITEMS //
 	const getTotalItemsCount = () => {
 		return cartItems.reduce((total, item) => total + item.quantity, 0);
 	};
 
 	return (
-		<div>
-			<h1>Book Finder</h1>
-			<SearchBox searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-			<Books searchTerm={searchTerm} onFavourite={addFavourite} />
-			<FavouriteBooks
-				favouriteBooks={favouriteBooks}
-				removeFavourite={removeFavourite}
-			/>
+		<div className="app-container">
+			<div className="left-panel">
+				<div className="header">
+					<h1>Book Finder</h1>
+				</div>
+				<SearchBox
+					searchTerm={searchTerm}
+					setSearchTerm={setSearchTerm}
+				/>
+				<Books
+					searchTerm={searchTerm}
+					onFavourite={addFavourite}
+					onAddToCart={addToCart}
+					favouriteBooks={favouriteBooks}
+				/>
+				<FavouriteBooks
+					favouriteBooks={favouriteBooks}
+					removeFavourite={removeFavourite}
+					onAddToCart={addToCart}
+					onClearAll={clearFavourites}
+				/>
+			</div>
+
+			<div className="right-panel">
+				<Cart
+					cartItems={cartItems}
+					removeFromCart={removeFromCart}
+					onDrop={addToCart}
+					totalPrice={getTotalPrice()}
+					totalItemsCount={getTotalItemsCount()}
+					onClearAll={clearCart}
+				/>
+			</div>
 		</div>
 	);
 }

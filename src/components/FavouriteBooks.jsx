@@ -1,22 +1,37 @@
-import List from './List';
+import BookCard from './BookCard';
 
-function FavouriteBooks({ favouriteBooks, removeFavourite }) {
+function FavouriteBooks({
+	favouriteBooks,
+	removeFavourite,
+	onAddToCart,
+	onClearAll,
+}) {
 	return (
-		<>
-			<h2>Favourite Books</h2>
-			<List
-				items={favouriteBooks}
-				emptyMessage="You have no favourite books yet."
-				renderItem={(book) => (
-					<>
-						<strong>{book.title}</strong>
-						<button onClick={() => removeFavourite(book)}>
-							Remove
-						</button>
-					</>
+		<div className="section">
+			<div className="section-header">
+				<h2>Favourite Books ({favouriteBooks.length})</h2>
+				{favouriteBooks.length > 0 && (
+					<button className="clear-btn" onClick={onClearAll}>
+						Clear All
+					</button>
 				)}
-			/>
-		</>
+			</div>
+			{favouriteBooks.length === 0 ? (
+				<p>You have no favourite books yet.</p>
+			) : (
+				<div className="books-grid">
+					{favouriteBooks.map((book) => (
+						<BookCard
+							key={book.title}
+							book={book}
+							onAddToCart={onAddToCart}
+							onRemoveFavourite={removeFavourite}
+							showRemove={true}
+						/>
+					))}
+				</div>
+			)}
+		</div>
 	);
 }
 
