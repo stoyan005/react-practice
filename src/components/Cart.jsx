@@ -10,7 +10,7 @@ function Cart({
 }) {
 	const [isDragOver, setIsDragOver] = useState(false);
 
-	const handleDragOver = () => {
+	const handleDragOver = (e) => {
 		e.preventDefault();
 		setIsDragOver(true);
 	};
@@ -67,7 +67,7 @@ function Cart({
 			) : (
 				<>
 					{cartItems.map((item) => (
-						<div key={item.id} className="cart">
+						<div key={item.id} className="cart-item">
 							<img
 								src={item.book.image}
 								alt={item.book.title}

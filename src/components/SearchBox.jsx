@@ -1,5 +1,3 @@
-import './searchbox.css';
-
 function SearchBox({ searchTerm, setSearchTerm }) {
 	return (
 		<>

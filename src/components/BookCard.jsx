@@ -22,7 +22,7 @@ function BookCard({
 			<img
 				src={book.image}
 				alt={book.title}
-				className=""
+				className="book-image"
 				onError={(e) => {
 					e.target.style.display = 'none';
 				}}

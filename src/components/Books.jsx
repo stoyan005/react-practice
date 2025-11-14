@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-
-import './books.css';
 import BookCard from './BookCard';
 
 function Books({ searchTerm, onFavourite, onAddToCart, favouriteBooks }) {

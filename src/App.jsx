@@ -41,7 +41,7 @@ function App() {
 						: item
 				);
 			} else {
-				return [...currentItems, { book, quantity: 1, id: Date.naw() }];
+				return [...currentItems, { book, quantity: 1, id: Date.now() }];
 			}
 		});
 	};
@@ -56,12 +56,14 @@ function App() {
 
 			if (removeAll || existingItem.quantity === 1) {
 				return currentItems.filter(
-					(item) => item.book.title === bookTitle
+					(item) => item.book.title !== bookTitle
 				);
 			} else {
-				return currentItems.map((item) => item.book.title === bookTitle)
-					? { ...item, quantity: item.quantity - 1 }
-					: item;
+				return currentItems.map((item) => {
+					return item.book.title === bookTitle
+						? { ...item, quantity: item.quantity - 1 }
+						: item;
+				});
 			}
 		});
 	};
